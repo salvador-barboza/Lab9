@@ -5,6 +5,7 @@ const cors = require('cors')
 const { apiMiddleware } = require('./apiMiddleware')
 const { BookStore } = require('./data/bookstore')
 const { initialize } = require('./data/dbinitialization')
+const { PORT } = require('./config')
 
 const app = express()
 app.use(express.static('public'))
