@@ -1,4 +1,3 @@
-const API_BASE = 'http://localhost:3000'
 const config = {
   headers: {
     Authorization:  'Bearer 2abbf7c3-245b-404f-9473-ade729ed4653',
@@ -7,17 +6,17 @@ const config = {
 }
 
 function getBookmarks() {
-  return fetch(API_BASE + '/bookmarks', { method: 'get', ...config })
+  return fetch('/bookmarks', { method: 'get', ...config })
     .then(res => res.ok ? res.json().then(b => b.books): [])
 }
 
 function getBookmarkByTitle(title) {
-  return fetch(API_BASE + `/bookmark?title=${title}`, { method: 'get', ...config })
+  return fetch(`/bookmark?title=${title}`, { method: 'get', ...config })
     .then(res => res.ok ? res.json().then(b => b.books): [])
 }
 
 function postBookmark({ title, description, url, rating }) {
-  return fetch(API_BASE + '/bookmarks', {
+  return fetch('/bookmarks', {
     method: 'POST',
     body: JSON.stringify({ title, description, url, rating }),
     ...config
@@ -25,14 +24,14 @@ function postBookmark({ title, description, url, rating }) {
 }
 
 function deleteBookmark(id) {
-  return fetch(API_BASE + `/bookmark/${id}`, {
+  return fetch(`/bookmark/${id}`, {
     method: 'DELETE',
     ...config
   }).then(j => j.ok)
 }
 
 function updateBookmark(id, { title, description, url, rating }) {
-  return fetch(API_BASE + `/bookmark/${id}`, {
+  return fetch(`/bookmark/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({id, title, description, url, rating }),
     ...config

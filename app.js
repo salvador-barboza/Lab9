@@ -85,7 +85,7 @@ app.patch('/bookmark/:id', async (request, response) => {
   }
 })
 
-app.listen(3000, async () => {
+app.listen(PORT, async () => {
   await initialize()
-  console.log('server is listening in port 3000')
+  console.log(`server is listening in port ${PORT}`)
 })
