@@ -1,19 +1,22 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const cors = require('cors')
 const { apiMiddleware } = require('./apiMiddleware')
 const { BookStore } = require('./data/bookstore')
 const { initialize } = require('./data/dbinitialization')
 
 const app = express()
-app.use(bodyParser.json())
+app.use(express.static('public'))
+app.use(cors())
 app.use(morgan('common'))
+app.use(bodyParser.json())
 app.use(apiMiddleware)
 
 app.get('/bookmarks', async (request, response) => {
   const books = await BookStore.getAllBooks()
   if (books.length < 1) {
-    return response.send(404).send("no bookmarks found")
+    return response.status(404).send("no bookmarks found")
   } else {
     return response.json({ books })
   }
@@ -28,7 +31,7 @@ app.get('/bookmark', async (request, response) => {
     } else {
       const books = await BookStore.getBooksByTitle(titleQueryParam)
       if (books.length < 1) {
-        return response.send(404).send("no bookmarks found")
+        return response.status(404).send("no bookmarks found")
       } else {
         return response.json({ books })
       }
@@ -38,6 +41,8 @@ app.get('/bookmark', async (request, response) => {
 
 app.post('/bookmarks', async (request, response) => {
   const { title, description, url, rating } = request.body
+
+  console.log(request.body)
   if (!title || !description || !url || !rating) {
     return response.status(406).send("you must specify a title, description, url and rating to create a bookmark.")
   }
@@ -45,7 +50,7 @@ app.post('/bookmarks', async (request, response) => {
   try {
     const book = await BookStore.addBook({ title, description, url, rating })
     return response.status(201).json({ book })
-  } catch {
+  } catch (err) {
     return response.status(400).send('there is an error in the request parameters')
   }
 })

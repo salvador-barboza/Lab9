@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bookmark app</title>
+</head>
+<body>
+  <h1>Bookmarks:</h1>
+  <ul id="bookmark-list">
+
+  </ul>
+  <button id="show-all">Show all bookmarks</button>
+  </H1>
+  <h2>Search for a bookmark by title:</h2>
+  <form id="search-by-id-form">
+    <input type="text" name="bookmark-id" id="search-bookmark-title">
+    <button>search</button>
+  </form>
+
+  <h2>Update a bookmark:</h2>
+  <form id="update-form">
+    <input type="text" name="bookmark-id" id="update-bookmark-id" placeholder="id">
+    <input type="text" name="bookmark-title" id="update-bookmark-title" placeholder="title">
+    <input type="text" name="bookmark-description" id="update-bookmark-description" placeholder="description">
+    <input type="text" name="bookmark-url" id="update-bookmark-url" placeholder="url">
+    <input type="text" name="bookmark-rating" id="update-bookmark-rating" placeholder="rating">
+    <button>update</button>
+  </form>
+
+  <h2>Create a bookmark:</h2>
+  <form id="create-form">
+    <input type="text" name="bookmark-title" id="create-bookmark-title" placeholder="title">
+    <input type="text" name="bookmark-description" id="create-bookmark-description" placeholder="description">
+    <input type="text" name="bookmark-url" id="create-bookmark-url" placeholder="url">
+    <input type="text" name="bookmark-rating" id="create-bookmark-rating" placeholder="rating">
+    <button>create</button>
+  </form>
+
+  <h2>Delete a bookmark:</h2>
+  <form id="delete-form">
+    <input type="text" name="bookmark-id" id="delete-bookmark-id" placeholder="id">
+    <button>delete</button>
+  </form>
+
+  <script src="index.js"></script>
+</body>
+</html>
