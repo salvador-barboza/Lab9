@@ -61,8 +61,12 @@ app.delete('/bookmark/:id', async (request, response) => {
     return response.status(404).send('this bookmark does not exist')
   }
 
-  await BookStore.deleteBook(request.params.id)
-  return response.sendStatus(200)
+  try {
+    await BookStore.deleteBook(request.params.id)
+    return response.sendStatus(200)
+  } catch {
+    return response.sendStatus(404).send('this bookmark does not exist')
+  }
 })
 
 app.patch('/bookmark/:id', async (request, response) => {

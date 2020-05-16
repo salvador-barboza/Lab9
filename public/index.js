@@ -5,14 +5,20 @@ const config = {
   },
 }
 
+function displayError(error) {
+  document.querySelector("#error").innerHTML = 'An error has ocourred: ' + error
+}
+
 function getBookmarks() {
   return fetch('/bookmarks', { method: 'get', ...config })
     .then(res => res.ok ? res.json().then(b => b.books): [])
+    .catch((err) => displayError(err))
 }
 
 function getBookmarkByTitle(title) {
   return fetch(`/bookmark?title=${title}`, { method: 'get', ...config })
     .then(res => res.ok ? res.json().then(b => b.books): [])
+    .catch((err) => displayError(err))
 }
 
 function postBookmark({ title, description, url, rating }) {
@@ -20,14 +26,24 @@ function postBookmark({ title, description, url, rating }) {
     method: 'POST',
     body: JSON.stringify({ title, description, url, rating }),
     ...config
-  }).then(j => j.ok)
+  }).then(t => {
+    if (!t.ok) {
+      displayError(t.statusText)
+    }
+  })
+  .catch((err) => displayError(err))
 }
 
 function deleteBookmark(id) {
   return fetch(`/bookmark/${id}`, {
     method: 'DELETE',
     ...config
-  }).then(j => j.ok)
+  }).then(t => {
+    if (!t.ok) {
+      displayError(t.statusText)
+    }
+  })
+  .catch((err) => displayError(err))
 }
 
 function updateBookmark(id, { title, description, url, rating }) {
@@ -35,7 +51,12 @@ function updateBookmark(id, { title, description, url, rating }) {
     method: 'PATCH',
     body: JSON.stringify({id, title, description, url, rating }),
     ...config
-  }).then(j => j.ok)
+  }).then(t => {
+    if (!t.ok) {
+      displayError(t.statusText)
+    }
+  })
+  .catch((err) => displayError(err))
 }
 
 function createBookmark({ _id, title, description, url, rating }) {
